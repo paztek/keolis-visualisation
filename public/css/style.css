@@ -1,0 +1,23 @@
+body {
+    padding-top: 40px;
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0px;
+    }
+}
+
+#graph {
+    height: 300px;
+    margin: 5px;
+}
+
+#map {
+    height: 400px;
+    margin: 5px;
+}
+
+#map img {
+    max-width: none;
+}

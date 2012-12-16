@@ -1,0 +1,18 @@
+{
+  "name": "keolis-visualisation",
+  "description": "Affiche en temps réel les données du réseau Vélo Star (Rennes)",
+  "author": "Matthieu Balmes <matthieu.balmes@gmail.com>",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app.js",
+    "install": "node setup.js"
+  },
+  "dependencies": {
+    "express": "3.0.2",
+    "jade": "*",
+    "async": "0.1.22",
+    "mongoose": "3.5.0",
+    "mongoose-ttl": "0.0.3",
+    "socket.io": "0.9.10"
+  }
+}

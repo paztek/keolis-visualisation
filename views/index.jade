@@ -1,0 +1,62 @@
+doctype 5
+html
+    head
+        //meta(name='viewport', content='width=device-width,initial-scale=1')
+        meta(name='apple-mobile-web-app-capable', content='yes')
+        title Kéolis Visualisation
+        link(rel='stylesheet', href='/css/bootstrap.css')
+        link(rel='stylesheet', href='/css/bootstrap-responsive.css')
+        link(rel='stylesheet', href='/css/style.css')
+    body
+        block body
+            div#header.navbar.navbar-inverse.navbar-fixed-top
+                div.navbar-inner
+                    div.container
+                        button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.brand(href='/') Kéolis Visualisation
+                        div.nav-collapse.collapse
+            div#content.container
+                div#map
+                div#data
+                div#graph
+            div#footer
+                div.container
+                    hr
+                    p Matthieu Balmes 2012
+                    
+        block templates
+            // Templates
+            script(type='text/template', id='stationDetailsTpl')
+                h3 <%= name %>
+                p <%= district %>
+                div.row-fluid
+                    div.span4
+                        p <%= records[records.length - 1].slotsAvailable %> libre(s)
+                    div.span8
+                        div.progress.progress-striped.active(class!="progress-<%= slotsClass %>")
+                            div.bar(style!="width:<%= slotsAvailablePerCent %>%")
+                div.row-fluid
+                    div.span4
+                        p <%= records[records.length - 1].bikesAvailable %> vélo(s)
+                    div.span8
+                        div.progress.progress-striped.active(class!="progress-<%= bikesClass %>")
+                            div.bar(style!="width:<%= bikesAvailablePerCent %>%")
+            script(type='text/template', id='stationGraphTpl')
+                h3 <%= name %>
+                p <%= district %>
+            
+        block javascripts
+            // Libs
+            script(src='/js/libs/jquery.js')
+            script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
+            script(src='/js/libs/highcharts.js')
+            script(src='/js/libs/infobubble.js')
+            script(src='/js/libs/bootstrap.js')
+            script(src='/js/libs/underscore.js')
+            script(src='/js/libs/backbone.js')
+            script(src='/js/libs/backbone.marionette.js')
+            script(src='/socket.io/socket.io.js')
+            script(src='/js/main.js')
