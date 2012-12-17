@@ -53,7 +53,9 @@ app.get('/stations', function(req, res, next) {
 
 var server = http.createServer(app);
 
-var sio = io.listen(server);
+var sio = io.listen(server, {
+    'log level': 0
+});
 
 sio.sockets.on('connection', function(socket) {
     console.log('A socket connected !');
