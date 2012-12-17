@@ -4,5 +4,5 @@ module.exports = {
     dbUrl: 'mongodb://localhost/keolis',
     apiHost: 'data.keolis-rennes.com',
     apiPath: '/json/',
-    refreshPeriod: 60,
+    refreshPeriod: 180, // 3 minutes
 }

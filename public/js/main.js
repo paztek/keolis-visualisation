@@ -40,7 +40,7 @@ $(document).ready(function() {
     
             // Updating the records
             station.set({ 'records': station.get('records').concat(data.records) }, { silent : true });;
-            while (station.get('records').length > station.get('maxRecords')) {// We only keep 1 week of data
+            while (station.get('records').length > station.get('maxRecords')) {// We only keep 1 day of data
                 station.set({ 'records': station.get('records').shift() }, { silent : true });
             }
             // Updating the values

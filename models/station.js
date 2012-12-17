@@ -22,7 +22,7 @@ var recordSchema = new mongoose.Schema({
     maxRecords: {
         type: Number,
         required: true,
-        'default': 60 * 24 * 7
+        'default': 20 * 24
     }
 });
 
@@ -59,7 +59,7 @@ var schema = new mongoose.Schema({
 });
 
 schema.pre('save', function(next) {
-    while (this.records.length > 60 * 24 * 7) { // We only keep 1 week of data
+    while (this.records.length > 20 * 24) { // We only keep 1 day
         this.records.shift();
         this.markModified('records');
     }
