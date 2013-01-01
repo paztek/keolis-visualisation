@@ -1,9 +1,10 @@
 
 /**
- * Module dependencies.
+ * App dependencies.
  */
 
 var express = require('express'),
+    app = express(),
     http = require('http'),
     util = require('util'),
     path = require('path'),
@@ -14,22 +15,14 @@ var express = require('express'),
     config = require('./config');
     
 var Station = require('./models/station');
-var Record = require('./models/record');
-
-var app = express();
 
 app.configure(function(){
-    app.set('mode', process.env.NODE_ENV || 'development');
-    app.set('port', process.env.PORT || 8081);
+    app.set('mode', config.env);
+    app.set('port', config.port);
     app.set('apiKey', config.apiKey);
     app.set('refreshPeriod', config.refreshPeriod);
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
-    app.locals.pretty = true;
     app.use(express.favicon());
     app.use(express.logger('dev'));
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -39,10 +32,6 @@ app.configure('development', function(){
 });
 
 mongoose.connect(config.dbUrl);
-
-app.get('/', function(req, res, next) {
-    return res.render('index');
-});
 
 app.get('/stations', function(req, res, next) {
     Station.find(function(err, stations) {
@@ -58,7 +47,7 @@ var sio = io.listen(server, {
 });
 
 sio.sockets.on('connection', function(socket) {
-    console.log('A socket connected !');
+    //console.log('A socket connected !');
 });
 
 // Pull the stations data every config.refreshPeriod
@@ -83,8 +72,7 @@ setInterval(function() {
             var obj = JSON.parse(output);
             console.log(obj.opendata.request);
             var stationsData = obj.opendata.answer.data.station;
-            console.log(stationsData.length + ' stations récupérées');
-            // Pour chaque station, on la crée si elle n'existe pas ou on l'update si elle se trouve déjà en base
+            // For each station, we create it if it doesn't exists yet or we update it if it's already in the database
             async.forEach(stationsData, function(stationData, callback) {
                 Station.findOne({ number: parseInt(stationData.number) }, function(err, station) {
                     if (err) {
