@@ -9,7 +9,6 @@ var express = require('express'),
     util = require('util'),
     path = require('path'),
     mongoose = require('mongoose'),
-    io = require('socket.io'),
     async = require('async'),
     querystring = require('querystring'),
     config = require('./config');
@@ -19,8 +18,6 @@ var Station = require('./models/station');
 app.configure(function(){
     app.set('mode', config.env);
     app.set('port', config.port);
-    app.set('apiKey', config.apiKey);
-    app.set('refreshPeriod', config.refreshPeriod);
     app.use(express.favicon());
     app.use(express.logger('dev'));
     app.use(app.router);
@@ -41,14 +38,6 @@ app.get('/stations', function(req, res, next) {
 });
 
 var server = http.createServer(app);
-
-var sio = io.listen(server, {
-    'log level': 0
-});
-
-sio.sockets.on('connection', function(socket) {
-    //console.log('A socket connected !');
-});
 
 // Pull the stations data every config.refreshPeriod
 setInterval(function() {
